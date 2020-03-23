@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount_of_stock: 1
+  stock_symbol: MyString
+
+two:
+  amount_of_stock: 1
+  stock_symbol: MyString
