@@ -1,0 +1,11 @@
+.transactions-div{
+    width: 60vw;
+    height: 80vh;
+    margin: 0 auto;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+.transactions-div .stock-list{
+    margin: 50px;
+}
