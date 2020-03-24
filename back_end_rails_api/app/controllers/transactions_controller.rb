@@ -11,7 +11,7 @@ class TransactionsController < ApplicationController
             else
                 render json:{
                     status: 405
-                    message: "Cannot process request due to low balance" 
+                    message: "Cannot process request due to insufficient funds" 
                 }
             end
         end
