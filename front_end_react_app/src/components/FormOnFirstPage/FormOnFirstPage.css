@@ -1,0 +1,16 @@
+.form-template{
+   border: 1px solid black;  
+   width: 400px;
+   margin: auto;
+}
+
+.form-template-header{
+    text-align:center;
+}
+
+.register-link{
+    display: block;
+    text-align:center;
+    margin-bottom: 30px;
+    text-decoration:underline;
+}

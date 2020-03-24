@@ -1,0 +1,26 @@
+.log-in-form label {
+    display:block;
+    padding: 5px;
+}
+
+.log-in-form{
+    padding: 30px;
+}
+
+#password_confirmation, #password, #email, #name {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  #register-button{
+      padding: 12px 20px;
+      background-attachment: #efefef;
+      border-radius: 4px;
+      width: 100%;
+      margin: 8px 0;
+  }
