@@ -17,4 +17,16 @@ class TransactionsController < ApplicationController
         end
     end
 
+    def index
+        if @current_user
+            transactions = @current_user.transactions
+            render json: => transactions
+        else
+            render json: => {
+                status: 403
+            }
+        end
+    end
+
+
 end

@@ -7,7 +7,7 @@ class StocksController < ApplicationController
             render json: => stocks
         else
             render json: => {
-                status: 404
+                status: 403
             }
         end
     end
