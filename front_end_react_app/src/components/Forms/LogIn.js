@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Registration.css";
+import "./FormStyles.css";
 
 function Login (props) {
    

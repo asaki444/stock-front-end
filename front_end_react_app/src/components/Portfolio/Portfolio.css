@@ -1,0 +1,27 @@
+.portfolio-div{
+  display:flex;
+  width: 60vw;
+  height: 80vh;
+  margin: 0 auto;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+
+
+.purchase-form-div h2{
+    padding-left: 30px;
+    margin-bottom: 0px;
+}
+
+.purchase-form-div{
+    width: 30vw;
+}
+
+.portfolio-div .stock-list td{
+   padding: 10px 20px;
+}
+
+.portfolio-div .stock-list h2{
+    padding-left: 20px;
+}

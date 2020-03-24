@@ -7,7 +7,7 @@
     padding: 30px;
 }
 
-#password_confirmation, #password, #email, #name {
+#password_confirmation, #password, #email, input[type="text"], input[type="number"] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
