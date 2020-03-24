@@ -1,14 +1,16 @@
 class StocksController < ApplicationController
     include CurrentUserConcern
-    before_action :user_logged_in?
 
     def index
-        
+        if @current_user
+            stock = @current_user.stocks
+            render json: => stocks
+        else
+            render json: => {
+                status: 404
+            }
+        end
     end
 
-    private
- 
-    def is_user_logged_in?
-       return @current_user !== undefined
-    end
+    
 end
