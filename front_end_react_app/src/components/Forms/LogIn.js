@@ -27,14 +27,15 @@ axios.post('http://localhost:3001/logged_in', {
 }, {
     withCredentials: true
 }).then(function (res) {
-     
+   const {user} = res.data;
+   this.props.userState.dispatch({type: 'LOGIN', user_id: user.id})
 }).catch(error => console.log("registration error", error))
 }
 
 
 handleSubmit = (e)=>{
    e.preventDefault()
-  this.props.userState.dispatch({type: 'LOGIN', credentials: this.state })
+ 
 }
 
 
