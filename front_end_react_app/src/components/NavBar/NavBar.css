@@ -1,0 +1,10 @@
+.navigation-bar{
+    position: absolute;
+    top:0;
+    right:0;
+}
+
+.navigation-bar p{
+    color: #34a8eb;
+    text-decoration: underline;
+}

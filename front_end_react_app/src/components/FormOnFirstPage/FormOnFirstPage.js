@@ -1,18 +1,23 @@
 import React,  { useState } from 'react';
-import Registration from '../SignInForms/Registration'
-import LogIn from '../SignInForms/LogIn'
+import Registration from '../Forms/Registration'
+import LogIn from '../Forms/LogIn'
 import "./FormOnFirstPage.css";
+import { UserContext} from '../../context/UserState';
 
 function FormOnFirstPage() {
 
     const [displayRegister, setDisplayRegister] = useState(false)
-    console.log(displayRegister)
+
     return(
+     
         <div className="form-template">
             <h2 className="form-template-header">Stock App Log In Page</h2>
-             {displayRegister ? <Registration /> : <LogIn/>} 
+               <UserContext.Consumer>
+                {(userState,dispatch) => displayRegister ? <Registration userState={userState} dispatch={dispatch} /> : <LogIn userState={userState} dispatch={dispatch}/>} 
+             </UserContext.Consumer>
              {!displayRegister && <p className="register-link" onClick={()=> setDisplayRegister(true)}> Don't have an account? Click Here To Register </p>}
         </div>
+    
     )
 }
 
