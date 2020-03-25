@@ -12,8 +12,8 @@ function FormOnFirstPage() {
      
         <div className="form-template">
             <h2 className="form-template-header">Stock App Log In Page</h2>
-               <UserContext.Consumer>
-                {(userState,dispatch) => displayRegister ? <Registration userState={userState} dispatch={dispatch} /> : <LogIn userState={userState} dispatch={dispatch}/>} 
+             <UserContext.Consumer>
+                { (userState, dispatch) => displayRegister ? <Registration userState={userState} dispatch={dispatch}/> : <LogIn userState={userState} dispatch={dispatch}/>}  
              </UserContext.Consumer>
              {!displayRegister && <p className="register-link" onClick={()=> setDisplayRegister(true)}> Don't have an account? Click Here To Register </p>}
         </div>

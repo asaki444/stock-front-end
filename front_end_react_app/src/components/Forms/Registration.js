@@ -1,5 +1,8 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import "./FormStyles.css";
+import axios from "axios";
+import {handleChange, checkValidation} from '../../globalFunctions/globalFunctions';
+import { Link } from 'react-router-dom';
 
 class Registration extends React.Component {
     constructor(props){
@@ -8,42 +11,82 @@ class Registration extends React.Component {
             name: '',
             email: '',
             password: '',
-            password_confirmation: ''
+            password_confirmation: '',
+            duplicateFound: false
+    }
+}
+
+
+
+registerAPIRequest = ()=>{
+    if(checkValidation(this.state)){
+        console.log("it's validated")
+        const {
+            name,
+            email,
+            password,
+            password_confirmation
+        } = this.state
+        
+        axios.post('http://localhost:3001/registrations', {
+        user: {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
         }
-    }
+    }, {
+        withCredentials: true
+    })
+    .then(
+       response => {              
+                console.log(response.data.status)
+                if(response.data.status === "created"){
+                const {id, account_balance} = response.data.user
+                this.props.userState.dispatch({type: 'REGISTER', 
+                user_id: id, 
+                account_balance: account_balance, 
+                loggedIn: true})}
+                else if(response.data.status ==="duplicate record"){
+                    this.setState({
+                        duplicateFound: true
+                    })
+                }
 
-    handleChange = (e)=> {
-        let value = e.target.value.trim()
-        this.setState({
-            [e.target.id]: value
-        })
-    }
+              }
+    ).catch(error => console.log("registration error", error));
+  }
+}
 
-    handleSubmit = (e)=>{
-       e.preventDefault()
-       console.log(this.props)
-    //    this.props.dispatch({type: 'REGISTER', credentials: this.state })
-    }
+handleSubmit = (e)=>{
+    e.preventDefault()
+    this.registerAPIRequest();
+}
+    
     
     render() {
       const {name, email,password, password_confirmation} = this.state;
-
+       console.log("registration Response", this.props.userState.userState);
         return (
-            <form className="log-in-form">
+            <Fragment>
+              <form className="log-in-form">
              <label for="name"> Name:      </label>
-              <input type="text" id="name" placeholder="Name" value={name} onChange={this.handleChange}/>
+              <input type="text" id="name" placeholder="Name" value={name} onChange={handleChange.bind(this)}/>
           
               <label for="email"> Email:  </label>
-               <input type="email" id="email" placeholder="Email" value={email} onChange={this.handleChange}/>
+               <input type="email" id="email" placeholder="Email" value={email} onChange={handleChange.bind(this)}/>
               
                <label for="email"> Password:</label>
-               <input type="password" id="password"  placeholder="Password" value={password} onChange={this.handleChange}/>
+               <input type="password" id="password"  placeholder="Password" value={password} onChange={handleChange.bind(this)}/>
                
                <label for="email"> Password Confirmation: </label>
-               <input type="password" id="password_confirmation" placeholder="Password Confirmation" value={password_confirmation} onChange={this.handleChange}/>
+               <input type="password" id="password_confirmation" placeholder="Password Confirmation" value={password_confirmation} onChange={handleChange.bind(this)}/>
               
                <button id="register-button" onClick={this.handleSubmit}> Register</button>
             </form>
+            {this.state.duplicateFound && <Link to= "/">Looks like you already have an account, click here to LogIn</Link>}
+        </Fragment>
+          
     
        )
     }

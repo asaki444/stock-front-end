@@ -1,22 +1,58 @@
 import React from 'react';
 import "./FormStyles.css";
+import {handleChange} from '../../globalFunctions/globalFunctions';
+import axios from "axios";
 
-function Login (props) {
-   
+class Login extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+        email: '',
+        password: '',
+    }
+}
+
+
+loginAPIRequest = ()=> {
+  const {
+    email,
+    password
+} = this.state;
+
+axios.post('http://localhost:3001/logged_in', {
+    user: {
+        email: email,
+        password: password
+    }
+}, {
+    withCredentials: true
+}).then(function (res) {
+     
+}).catch(error => console.log("registration error", error))
+}
+
+
+handleSubmit = (e)=>{
+   e.preventDefault()
+  this.props.userState.dispatch({type: 'LOGIN', credentials: this.state })
+}
+
+
+
+  render(){
     return (
         
-           <form className="log-in-form">
-             <label for="email"> Email: 
-              <input type="email" id="email" placeholder="Email"/>
-              </label>
-              <label for="email"> Password:
-              <input type="password" id="password"  placeholder="Password"/>
-              </label>
-              <button id="register-button"> Sign In</button>
- 
-           </form>
-    
-    )
-}
+      <form className="log-in-form">
+        <label for="email"> Email:     </label>
+         <input type="email" id="email" placeholder="Email" onChange={handleChange.bind(this)}/>
+         <label for="email"> Password: </label>
+         <input type="password" id="password"  placeholder="Password" onChange={handleChange.bind(this)}/>
+         <button id="register-button"> Sign In</button>
+      </form>
+
+      )
+    }
+  }
+
 
 export default Login
