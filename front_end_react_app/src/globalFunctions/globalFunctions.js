@@ -5,7 +5,7 @@ export function handleChange (e) {
         })
 }
 
-export function  checkValidation (state) {
+ export function checkValidation (state) {
     const{
         password,
         password_confirmation
@@ -22,3 +22,4 @@ export function  checkValidation (state) {
     }
    return true;
 }
+

@@ -4,20 +4,24 @@ import './App.css';
 import FormOnFirstPage from './components/FormOnFirstPage/FormOnFirstPage';
 import Portfolio from './components/Portfolio/Portfolio';
 import Transactions from './components/Transactions/Transactions';
-import { UserProvider} from './context/UserState';
+import { UserProvider,  UserContext} from './context/UserState';
+require('dotenv').config()
 
 function App() {
   return (
     <UserProvider>
+      <BrowserRouter>
       <div className="App">
-        <BrowserRouter>
         <Switch>
-          <Route path="/" component={FormOnFirstPage}/>
-          <Route path="/portfolio" component={Portfolio} />
+          {/* <UserContext.Consumer>
+            {(userState)=>  <Route path="/" render={() => <FormOnFirstPage userState={userState} />}/> }
+          </UserContext.Consumer> */}
+          <Route path="/portfolio" exact component={Portfolio} />
           <Route path="/transactions" component={Transactions}/>
+          <Route render={ () => <h1>404 Error</h1> } />
         </Switch>
-        </BrowserRouter>
       </div>
+      </BrowserRouter>
     </UserProvider>
   );
 }

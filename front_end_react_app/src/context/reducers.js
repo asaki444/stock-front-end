@@ -6,11 +6,11 @@ export const UserReducer = (state, action) => {
             return {
                 ...state, loggedIn: false
             }
-            case 'REGISTER':
+        case 'REGISTER':
                 return{...state, user_id: action.user_id, loggedIn: true, account_balance: action.account_balance}
-            case 'PURCHASE_STOCK':
-                return state;
-            default:
-                return state;
+        case 'PURCHASE_STOCK':
+                return  {...state };
+        default:
+             return state;
     }
 };

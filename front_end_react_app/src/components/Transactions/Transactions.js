@@ -4,7 +4,7 @@ import './Transactions.css';
 
 function Transactions () {
 
-  
+
 
     return(
         <div className="transactions-div">

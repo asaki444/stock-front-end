@@ -2,7 +2,7 @@ import React,{Fragment} from 'react';
 import "./FormStyles.css";
 import axios from "axios";
 import {handleChange, checkValidation} from '../../globalFunctions/globalFunctions';
-import { Link } from 'react-router-dom';
+
 
 class Registration extends React.Component {
     constructor(props){
@@ -19,6 +19,7 @@ class Registration extends React.Component {
 
 
 registerAPIRequest = ()=>{
+    console.log(checkValidation(this.state))
     if(checkValidation(this.state)){
         console.log("it's validated")
         const {
@@ -52,8 +53,7 @@ registerAPIRequest = ()=>{
                         duplicateFound: true
                     })
                 }
-
-              }
+            }
     ).catch(error => console.log("registration error", error));
   }
 }
@@ -84,7 +84,7 @@ handleSubmit = (e)=>{
               
                <button id="register-button" onClick={this.handleSubmit}> Register</button>
             </form>
-            {this.state.duplicateFound && <Link to= "/">Looks like you already have an account, click here to LogIn</Link>}
+            {this.state.duplicateFound && <p className="log-in-link"onClick={()=>this.props.setDisplayRegister(false)}> Seems Like You Already Have an Account. Click Here to Sign In</p>}
         </Fragment>
           
     

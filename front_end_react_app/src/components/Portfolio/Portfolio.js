@@ -1,15 +1,26 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import StocksTemplate from '../StocksTemplate/StocksTemplate';
 import PurchaseForm from '../Forms/PurchaseForm';
-import './Portfolio.css'
+import { UserContext} from '../../context/UserState';
+import './Portfolio.css';
 
 
 function Portfolio (){
+  console.log(process.env.REACT_APP_API_KEY)
+
+  
 
   return (
       <div className="portfolio-div">
-         <StocksTemplate heading={"Portfolio"}/>
-         <PurchaseForm />
+      <UserContext.Consumer>  
+         {(userState) => 
+         <Fragment>
+         <StocksTemplate userState={userState} heading={"Portfolio"}/>
+         <PurchaseForm userState={userState} />
+         </Fragment>
+         }
+      </UserContext.Consumer>
+      
       </div>
   )
 }
