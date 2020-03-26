@@ -7,7 +7,7 @@ class TransactionsController < ApplicationController
             if balance > 0 
                @current_user.update(account_balance: balance)
                symbol = params["transaction"]["stock_symbol"]
-               found_stock = stock_exists = Stock.find(stock_symbol: symbol)
+               found_stock = @current_user.stocks.find_by(stock_symbol: symbol)
                if found_stock
                 new_amount = found_stock.amount_of_stock + params["transaction"]["amount_of_stock"]
                 found_stock.update(amount_of_stock: new_amount)
@@ -16,9 +16,10 @@ class TransactionsController < ApplicationController
                Transaction.create(user: @current_user, stock: stock)
                render json: {
                    message: "purchase successful",
-                   user: @current_user
+                   balance: @current_user.account_balance,
+                   stock: @current_user.stocks.last
                }
-                 end
+              end
             else
                 render json: {
                     status: 405,
