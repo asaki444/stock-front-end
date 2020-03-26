@@ -1,8 +1,8 @@
 import React from 'react';
 import "./FormStyles.css";
 import {handleChange} from '../../globalFunctions/globalFunctions';
-import axios from "axios";
-import { apiAlphaRequest, sessionRequest } from '../../globalFunctions/apiFunctions';
+import {sessionRequest } from '../../globalFunctions/apiFunctions';
+import {Redirect} from 'react-router-dom';
 
 
 class Login extends React.Component {
@@ -25,8 +25,9 @@ sessionRequest('login', {user: {
   email: email,
   password: password
 } }).then( (res) => {
-   const {user} = res.data;
-   this.props.userState.dispatch({type: 'LOGIN', user: user})
+   const {transactions,stocks, user} = res.data;
+
+   this.props.userState.dispatch({type: 'LOGIN', user_id: user, account_balance: user.account_balance, transactions: transactions, stocks: stocks})
 }).catch(error => console.log("registration error", error))
 }
 
@@ -38,6 +39,9 @@ handleSubmit = (e)=>{
 
 
   render(){
+    if(this.props.userState.userState.loggedIn){
+      return <Redirect to="/portfolio" />
+    }
     return (
         
       <form className="log-in-form">

@@ -3,16 +3,11 @@ import Registration from '../Forms/Registration'
 import LogIn from '../Forms/LogIn'
 import "./FormOnFirstPage.css";
 import { UserContext} from '../../context/UserState';
-import { Redirect  } from 'react-router-dom';
 
 function FormOnFirstPage(props) {
 
     const [displayRegister, setDisplayRegister] = useState(false)
-
-   if(props.userState.userState.loggedIn){
-       return <Redirect to="/portfolio"/>
-   }
-
+  
     return(
      
         <div className="form-template">

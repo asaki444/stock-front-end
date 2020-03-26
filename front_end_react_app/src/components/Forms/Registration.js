@@ -1,8 +1,8 @@
 import React,{Fragment} from 'react';
 import "./FormStyles.css";
-import axios from "axios";
 import {handleChange, checkValidation} from '../../globalFunctions/globalFunctions';
 import { sessionRequest } from '../../globalFunctions/apiFunctions';
+import {Redirect} from 'react-router-dom';
 
 
 class Registration extends React.Component {
@@ -64,7 +64,9 @@ handleSubmit = (e)=>{
     
     render() {
       const {name, email,password, password_confirmation} = this.state;
-       console.log("registration Response", this.props.userState.userState);
+       if(this.props.userState.userState.loggedIn){
+        return <Redirect to="/portfolio" />
+      }
         return (
             <Fragment>
               <form className="log-in-form">

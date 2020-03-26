@@ -12,12 +12,11 @@ function App() {
       <BrowserRouter>
       <div className="App">
         <Switch>
-          <UserContext.Consumer>
-            {(userState)=>  <Route path="/" render={() => <FormOnFirstPage userState={userState} />}/> }
-          </UserContext.Consumer>
-          <Route path="/portfolio" component={Portfolio} />
-          <Route path="/transactions" component={Transactions}/>
-          <Route render={ () => <h1>404 Error</h1> } />
+            <Route path={"/portfolio"} component={Portfolio}/>
+            <Route path={"/transactions"} component={Transactions}/>
+            <Route path={"/homepage"} component={FormOnFirstPage} />
+            <Route render={ () => <h1>404 Error</h1> } />
+
         </Switch>
       </div>
       </BrowserRouter>

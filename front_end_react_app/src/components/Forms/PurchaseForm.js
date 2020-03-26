@@ -1,6 +1,5 @@
 import React from 'react'
-import './FormStyles.css'
-import axios from 'axios'
+import './FormStyles.css';
 import SearchAutoComplete from '../SearchAutoComplete/SearchAutoComplete';
 import { handleChange } from '../../globalFunctions/globalFunctions';
 import { apiAlphaRequest, transactionRequest } from '../../globalFunctions/apiFunctions';
