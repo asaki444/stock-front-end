@@ -51,7 +51,7 @@ class PurchaseForm extends React.Component {
            
          }
        
-     )
+     ).catch( err => console.log("err", err));
   }
  
   handleSubmit = e => {
@@ -84,8 +84,23 @@ class PurchaseForm extends React.Component {
       }
      ).then(
          res => {
-            console.log(res.data)
-            this.props.userState.dispatch({type: 'PURCHASE_STOCK', totalPrice, ticker, intQty })
+            console.log("purchase res",res.data)
+            const {
+              stock,
+              balance,
+              transaction
+            }  = res.data
+            this.props.userState.dispatch({type: 'PURCHASE_STOCK', 
+            account_balance: balance, 
+            stock: stock, 
+            transaction: transaction  })
+            this.setState({
+              ticker: '',
+              Qty: 0,
+              totalPrice: 0,
+              searchResults: [],
+              errorMessage: ''
+            })
          }
      )
    

@@ -1,20 +1,28 @@
 import React from 'react';
 import "./StocksTemplate.css"
+import { apiAlphaRequest } from '../../globalFunctions/apiFunctions';
 
 
 function StockListTemplate(props) {
-    console.log(props)
+    console.log("template", props)
     const {list, heading} = props
      
    function renderList(){
-    if(!list) return
+    if(!list) return;
+
+
         if(heading === "Portfolio"){
+
           return list.map( stock => 
-              {
-                  //make api request 
+              {  const{
+                    stock_symbol,
+                    amount_of_stock,
+                  } = stock
+              apiAlphaRequest('stock_info', stock_symbol).then(
+                  res => console.log(res)
+              ).catch(err => console.log("reg", err))
               const change = "red";
-              console.log(stock.stock_symbol)
-              return <tr><td>{stock.stock_symbol}</td><td>Shares: {stock.amount_of_stock}</td>
+              return <tr><td>{stock_symbol}</td><td>Shares: {amount_of_stock}</td>
               <td className={change}></td></tr>
               }  
             )

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export function apiAlphaRequest(urlPurpose,val){
+  console.log('we launced')
    let urlFunction
    if(urlPurpose === "search"){
     urlFunction = 'SYMBOL_SEARCH'

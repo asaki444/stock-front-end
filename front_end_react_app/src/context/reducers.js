@@ -24,7 +24,7 @@ export const UserReducer = (state, action) => {
                 return {
                     ...state,
                     account_balance: action.account_balance,
-                    transactions: [...state.transaction, action.transactions],
+                    transactions: [...state.transactions, action.transaction],
                     stocks: [...state.stocks, action.stock]
                 };
         default:
