@@ -13,13 +13,14 @@ class TransactionsController < ApplicationController
                 found_stock.update(amount_of_stock: new_amount)
                else
                stock = Stock.create(amount_of_stock: params["transaction"]["amount_of_stock"], stock_symbol: symbol )
-               Transaction.create(user: @current_user, stock: stock)
+               end
+               Transaction.create(user: @current_user, stock: stock, purchase_amount: params["transaction"]["purchase_amount"], amount_of_stock: params["transaction"]["amount_of_stock"])
                render json: {
                    message: "purchase successful",
                    balance: @current_user.account_balance,
-                   stock: @current_user.stocks.last
+                   stock: @current_user.stocks.last,
+                   transactions: @current_user.transactions
                }
-              end
             else
                 render json: {
                     status: 405,

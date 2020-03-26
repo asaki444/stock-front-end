@@ -10,7 +10,9 @@ class SessionsController < ApplicationController
         render json: {
             status: 'created',
             logged_in: true,
-            user: user
+            user: user,
+            transactions: user.transactions,
+            stocks: user.stocks
         }
     else 
         render json: {
@@ -23,7 +25,9 @@ class SessionsController < ApplicationController
     if @current_user
         render json: {
             logged_in: true,
-            user: @current_user
+            user: @current_user,
+            transactions: @current_user.transactions,
+            stocks: @current_user.stocks
         }
     else 
         render json: {
