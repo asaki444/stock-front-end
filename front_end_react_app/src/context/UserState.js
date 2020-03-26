@@ -2,7 +2,13 @@ import React, {useReducer} from 'react'
 import {UserReducer} from './reducers'
 
 
-const initialState = {loggedIn: false, user_id: null, stocks: [], transactions: [], account_balance: 0}
+const initialState = {
+  loggedIn: false,
+  user_id: null,
+  stocks: [],
+  transactions: [],
+  account_balance: 5000
+}
 
 
 

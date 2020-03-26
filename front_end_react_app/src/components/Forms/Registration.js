@@ -2,6 +2,7 @@ import React,{Fragment} from 'react';
 import "./FormStyles.css";
 import axios from "axios";
 import {handleChange, checkValidation} from '../../globalFunctions/globalFunctions';
+import { sessionRequest } from '../../globalFunctions/apiFunctions';
 
 
 class Registration extends React.Component {
@@ -21,33 +22,30 @@ class Registration extends React.Component {
 registerAPIRequest = ()=>{
     console.log(checkValidation(this.state))
     if(checkValidation(this.state)){
-        console.log("it's validated")
         const {
             name,
             email,
             password,
             password_confirmation
         } = this.state
-        
-        axios.post('http://localhost:3001/registrations', {
-        user: {
-            name: name,
-            email: email,
-            password: password,
-            password_confirmation: password_confirmation
-        }
-    }, {
-        withCredentials: true
-    })
+
+
+    sessionRequest('login', { user: {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation
+    }})
     .then(
        response => {              
-                console.log(response.data.status)
-                if(response.data.status === "created"){
+                if(response.data.status === "created"){   
                 const {id, account_balance} = response.data.user
+                
                 this.props.userState.dispatch({type: 'REGISTER', 
                 user_id: id, 
                 account_balance: account_balance, 
                 loggedIn: true})}
+
                 else if(response.data.status ==="duplicate record"){
                     this.setState({
                         duplicateFound: true

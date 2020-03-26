@@ -2,6 +2,7 @@ import React from 'react';
 import "./FormStyles.css";
 import {handleChange} from '../../globalFunctions/globalFunctions';
 import axios from "axios";
+import { apiAlphaRequest, sessionRequest } from '../../globalFunctions/apiFunctions';
 
 
 class Login extends React.Component {
@@ -13,24 +14,19 @@ class Login extends React.Component {
     }
 }
 
-
 loginAPIRequest = () => {
   const {
     email,
     password
 } = this.state;
-console.log("we got here")
-axios.post('http://localhost:3001/sessions', {
-    user: {
-        email: email,
-        password: password
-    }
-}, {
-    withCredentials: true
-}).then( (res) => {
-   console.log(res)
+
+
+sessionRequest('login', {user: {
+  email: email,
+  password: password
+} }).then( (res) => {
    const {user} = res.data;
-   this.props.userState.dispatch({type: 'LOGIN', user_id: user.id})
+   this.props.userState.dispatch({type: 'LOGIN', user: user})
 }).catch(error => console.log("registration error", error))
 }
 
@@ -42,7 +38,6 @@ handleSubmit = (e)=>{
 
 
   render(){
-  
     return (
         
       <form className="log-in-form">
