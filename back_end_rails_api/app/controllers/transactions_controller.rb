@@ -14,19 +14,15 @@ class TransactionsController < ApplicationController
                else
                stock = Stock.create(amount_of_stock: params["transaction"]["amount_of_stock"], stock_symbol: symbol )
                end
-               transaction = Transaction.create(user: @current_user, stock: stock, purchase_amount: params["transaction"]["purchase_amount"], amount_of_stock: params["transaction"]["amount_of_stock"])
-               if transaction
+
+               Transaction.create(user: @current_user, stock: stock, purchase_amount: params["transaction"]["purchase_amount"], amount_of_stock: params["transaction"]["amount_of_stock"])
+     
                  render json: {
                    message: "purchase successful",
                    balance: @current_user.account_balance,
                    stock_symbol: @current_user.stocks.last.stock_symbol,
                    transaction: @current_user.transactions.last
                }
-                else
-                    render json: {
-                        message: 'something went wrong'
-                    }
-             end
             else
                 render json: {
                     status: 405,
@@ -48,6 +44,13 @@ class TransactionsController < ApplicationController
             }
         end
     end
+    
 
+    private
+
+    
+    def transaction_params
+      params.require(:transaction).permit(:stock, :stock_symbol, :amount_of_stock, :user)
+    end
 
 end
