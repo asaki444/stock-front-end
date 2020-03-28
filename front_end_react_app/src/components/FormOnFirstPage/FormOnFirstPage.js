@@ -4,8 +4,7 @@ import LogIn from '../Forms/LogIn'
 import "./FormOnFirstPage.css";
 import { UserContext} from '../../context/UserState';
 
-function FormOnFirstPage(props) {
-    console.log(props);
+function FormOnFirstPage() {
     const [displayRegister, setDisplayRegister] = useState(false)
   
     return(

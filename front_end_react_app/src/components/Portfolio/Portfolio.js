@@ -10,7 +10,7 @@ function Portfolio () {
 			<UserContext.Consumer>
 				{(userState) => (
 					<Fragment>
-						<StocksTemplate list={userState.userState.stocks} heading={'Portfolio'} />
+						<StocksTemplate list={userState.userState.stocks} userState={userState} heading={'Portfolio'} />
 						<PurchaseForm userState={userState} />
 					</Fragment>
 				)}

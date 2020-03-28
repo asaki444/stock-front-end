@@ -1,66 +1,83 @@
-import React, { useState } from 'react';
-import "./StocksTemplate.css"
+import React, { useState, useRef, useEffect } from 'react';
+import './StocksTemplate.css';
 import { apiAlphaRequest } from '../../globalFunctions/apiFunctions';
 
+function StockListTemplate (props) {
+	const { list, heading,userState } = props;
+	const [
+		currentTotal,
+		setCurrentTotal
+    ] = useState(0);
+    const [
+        mount,
+        setMount
+    ]  = useState (false)
+	const tbody = useRef('');
 
-function StockListTemplate(props) {
-    console.log("template", props)
-    const {list, heading} = props
-    const [currentTotal, setCurrentTotal] = useState(0)
+	useEffect(() => {
+       
+        return setMount(true)
+        		
+    });
+    
 
 
-   function renderList(){
-    if(!list) return;
+	function renderList () {
+		if (!list || list.length === 0) return;
+      
+		if (heading === 'Portfolio') {
+            console.log('this runs', list)
+			return list.map((stock) => {
+				let change, price;
+                console.log(stock)
+				apiAlphaRequest('stock_info', stock.stock_symbol)
+					.then((res) => {
+						if (res.data.Note) return;
+						change = parseInt(res.data['Global Quote']['09. change']);
+						price = stock.amount_of_stock * parseInt(res.data['Global Quote']['05. price']);
 
+						let newTotal = currentTotal + price;
+                        setCurrentTotal(newTotal);
+                        console.log(`price: ${price}, newTotal: ${newTotal}, change: ${change}`)
+					})
+					.catch((err) => console.log('reg', err));
+				console.log('we ran', price);
+				return (
+					<tr className="table-row">
+						<td>{stock.stock_symbol}</td>
+						<td>Shares: {stock.amount_of_stock}</td>
+						<td
+							className={
 
-        if(heading === "Portfolio"){
+									change > 0 ? 'price-increase' :
+									'price-decrease'
+							}
+						>
+	
+							{price}
+						</td>
+					</tr>
+				);
+			});
+		}
+		else {
+			console.log(list);
+			// <tr><td>{stock.name}</td><td>Shares: {stock.shares}</td><td>{stock.cost}</td></tr
+			list.map((stock) => console.log(stock));
+		}
+	}
 
-          return list.map( stock => 
-              {  
-                const{
-                stock_symbol,
-                amount_of_stock
-              } = stock
-                  
-                  let change,price;
-               
-                  apiAlphaRequest('stock_info', stock_symbol).then(
-                  res => {
-                       change = parseInt(res.data['Global Quote']['09. change']);
-                       price =  amount_of_stock * parseInt(res.data['Global Quote']['05. price'])
-                       
-                       let newTotal = currentTotal + price
-                       setCurrentTotal(newTotal)  
-                  }    
-              ).catch(err => console.log("reg", err))
-              return <tr className="table-row">
-                           <td>{stock_symbol}</td>
-                           <td>Shares: {stock}</td>
-                           <td className={change > 0 ? "price-increase": "price-decrease"}> {price}</td>
-                    </tr>
-            })
-             
-      }  
-          
-        else{
-            console.log(list)
-            // <tr><td>{stock.name}</td><td>Shares: {stock.shares}</td><td>{stock.cost}</td></tr
-            list.map(stock => console.log(stock))}
-        
-    }
-
-    return(
-        <div className="stock-list">
-           <h2 className="stock-list-heading">{heading}</h2>
-           {currentTotal > 0 && <h2> {currentTotal} </h2>}
-           <table className="stock-list-table"> 
-            <tbody>
-              {renderList()}
-            </tbody>
-           </table>
-        </div>
-        
-    )
+	return (
+		<div className="stock-list">
+			<h2 className="stock-list-heading">{heading}</h2>
+			{currentTotal > 0 && <h2> {currentTotal} </h2>}
+			<table className="stock-list-table">
+                <tbody ref={tbody}>
+                    { mount && renderList()}
+				</tbody>
+			</table>
+		</div>
+	);
 }
 
 export default StockListTemplate;

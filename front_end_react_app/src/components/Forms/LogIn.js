@@ -25,9 +25,13 @@ sessionRequest('login', {user: {
   email: email,
   password: password
 } }).then( (res) => {
-   const {transactions,stocks, user} = res.data;
-
-   this.props.userState.dispatch({type: 'LOGIN', user_id: user, account_balance: user.account_balance, transactions: transactions, stocks: stocks})
+   const {transactions,stocks, user, account_balance} = res.data;
+   console.log(res.data)
+   this.props.userState.dispatch({type: 'LOGIN', 
+   user_id: user, 
+   account_balance: account_balance, 
+   transactions: transactions, 
+   stocks: stocks})
 }).catch(error => console.log("registration error", error))
 }
 
@@ -39,16 +43,19 @@ handleSubmit = (e)=>{
 
 
   render(){
+
     if(this.props.userState.userState.loggedIn){
       return <Redirect to="/portfolio" />
     }
+
+
     return (
         
       <form className="log-in-form">
-        <label for="email"> Email:   </label>
+        <label for="email"> Email:</label>
          <input type="email" id="email" placeholder="Email" onChange={handleChange.bind(this)}/>
-         <label for="email"> Password: </label>
-         <input type="password" id="password"  placeholder="Password" onChange={handleChange.bind(this)}/>
+         <label for="email"> Password:</label>
+         <input type="password" id="password" placeholder="Password" onChange={handleChange.bind(this)}/>
          <button id="register-button" onClick={this.handleSubmit}> Sign In</button>
       </form>
 
