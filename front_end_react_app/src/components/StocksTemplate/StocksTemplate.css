@@ -7,3 +7,16 @@
 .stock-list-heading{
     padding-left: 10px;
 }
+
+.table-row td:nth-child(3){
+    color: grey;
+}
+
+
+.price-increase{
+    color: green;
+}
+
+.price-decrease{
+    color: red;
+}

@@ -5,7 +5,7 @@ import "./FormOnFirstPage.css";
 import { UserContext} from '../../context/UserState';
 
 function FormOnFirstPage(props) {
-
+    console.log(props);
     const [displayRegister, setDisplayRegister] = useState(false)
   
     return(
@@ -16,7 +16,8 @@ function FormOnFirstPage(props) {
                 { (userState, dispatch) => displayRegister ? 
                   <Registration
                    userState={userState}
-                   dispatch={dispatch}/> : 
+                   dispatch={dispatch}
+                   setDisplayRegister={setDisplayRegister}/> : 
                  <LogIn
                  userState={userState} 
                  dispatch={dispatch}/>}  

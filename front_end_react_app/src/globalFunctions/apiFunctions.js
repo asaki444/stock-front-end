@@ -1,16 +1,17 @@
 import axios from "axios";
 
 export function apiAlphaRequest(urlPurpose,val){
-  console.log('we launced')
-   let urlFunction
+   console.log("this fired")
+   let urlFunction,param;
    if(urlPurpose === "search"){
     urlFunction = 'SYMBOL_SEARCH'
+    param = 'keywords'
    }
    else if(urlPurpose === "stock_info"){
      urlFunction = 'GLOBAL_QUOTE'
+     param = 'symbol'
    }
-     const url =  `https://www.alphavantage.co/query?function=${urlFunction}&keywords=${val}&apikey=${process.env.REACT_APP_API_KEY}`
-  
+     const url =  `https://www.alphavantage.co/query?function=${urlFunction}&${param}=${val}&apikey=${process.env.REACT_APP_API_KEY}`
     return axios.get(url)
 }
 
@@ -31,4 +32,8 @@ export function sessionRequest(typeOfLogin, objToPost){
 
 export function transactionRequest(objToPost){
     return axios.post('http://localhost:3001/transactions', objToPost, {withCredentials: true})
+}
+
+export function logoutRequest(){
+  return axios.delete('http://localhost:3001/logout')
 }

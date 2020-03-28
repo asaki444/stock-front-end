@@ -4,11 +4,12 @@ import './Transactions.css';
 import { UserContext } from '../../context/UserState';
 
 function Transactions () {
-
+   
     return(
         <div className="transactions-div">
             <UserContext.Consumer>
-              {(userState) => <StocksTemplate heading={"Transactions"} list={userState.userState.transactions}/>}
+              {(userState) => 
+              <StocksTemplate heading={"Transactions"} list={userState.userState.transactions}/>}
             </UserContext.Consumer>
         </div>
       
