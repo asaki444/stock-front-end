@@ -1,73 +1,92 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import './StocksTemplate.css';
 import { apiAlphaRequest } from '../../globalFunctions/apiFunctions';
 
-function StockListTemplate (props) {
-	const { list, heading,userState } = props;
-	const [
-		currentTotal,
-		setCurrentTotal
-    ] = useState(0);
-    const [
-        mount,
-        setMount
-    ]  = useState (false)
-	const tbody = useRef('');
 
-	useEffect(() => {
-       
-        return setMount(true)
-        		
-    });
+class StockTemplate extends React.Component {
+   constructor(props){
+       super(props)
+       this.state = {
+           stockDataRes: [],
+           currentPortVal: 0
+       }
+   }
+   
+   componentDidMount(){
+      this.getPrices()
+   }
+    
 
+   getPrices()  {
+       const {list} = this.props;
+       list.forEach( (stock) => {
+            apiAlphaRequest('stock_info', stock.stock_symbol).then(
+                res => {
+                    const{data} = res
+                    if(data.Note) return;        
+                    let val = stock.amount_of_stock * parseInt(data["Global Quote"]["05. price"]);
+                    let change = parseInt(data["Global Quote"]['09. change']);
+                    this.setState({
+                        currentPortVal: this.state.currentPortVal + val,
+                        stockDataRes: [...this.state.stockDataRes, {change: change, price: data["Global Quote"]['05. price']}]
+                       }
+                    )
+                }
+            )
+         }
+       )
 
-	const renderList = () => {
-		if (!list || list.length === 0) return;
-      
-		if (heading === 'Portfolio') {
-		     list.map((stock) => {
-			   let change, price;
-	          ( async function getPrices() {
-               const res = await apiAlphaRequest('stock_info', stock.stock_symbol)
-               return (
-                <tr className="table-row">
-                    <td>{stock.stock_symbol}</td>
-                    <td>Shares: {stock.amount_of_stock}</td>
-                    <td
-                        className={
+     
+   }
 
-                                change > 0 ? 'price-increase' :
-                                'price-decrease'
-                        }
-                    >      
-                    </td>
-                    <td>
-                        {price}
-                    </td>
-                </tr>)
-               })();
-
-            
-            })
-        }
-		// else {
-		// 	console.log(list);
-		// 	// <tr><td>{stock.name}</td><td>Shares: {stock.shares}</td><td>{stock.cost}</td></tr
-		// 	list.map((stock) => console.log(stock));
-		// }
-	}
-
-	return (
-		<div className="stock-list">
-			<h2 className="stock-list-heading">{heading}</h2>
-			{currentTotal > 0 && <h2> {currentTotal} </h2>}
-			<table className="stock-list-table">
-                <tbody ref={tbody}>
-                    { mount && renderList()}
-				</tbody>
-			</table>
-		</div>
-	);
+    indicateValChange(change){
+    if(change < 0 ){
+        return "price-decrease"
+    }
+    else if(change > 0 ){
+        return "price-increase"
+    }
+    else{
+        return ""
+    }
 }
 
-export default StockListTemplate;
+
+   render(){
+       const {
+           heading,
+           list
+       } = this.props
+       const{
+           stockDataRes
+       } = this.state
+
+     return(
+         <div>
+             <h2 className="stock-list-heading">{heading}</h2>
+            <table>
+                <tbody>
+                   {
+                   list.map( (stock, i ) =>
+                         <tr>
+                             <td>
+                                 {stock.stock_symbol} - {stock.amount_of_stock} Shares
+                               </td>   
+                                  { stockDataRes.length === list.length &&
+                                          <td className={this.indicateValChange(stockDataRes[i].change)}>
+                                          {stockDataRes[i].price} 
+                                         </td>
+                                  }
+                            
+                         </tr>)
+                   }
+                </tbody>
+            </table>
+         </div>
+       
+      )
+
+   }
+}
+
+export default StockTemplate;

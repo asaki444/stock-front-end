@@ -3,6 +3,8 @@
     border: solid 1px grey; 
     padding: 5px 0 5px 5px;
     width: 100%;
+    background-color: white;
+    opacity: 1.0;
 }
 
 .search-list-item:hover {
@@ -11,6 +13,8 @@
 }
 
 .search-list-container{
+    position:absolute;
+    z-index:100;
     margin-left: 0;
     padding-left: 0px;
     margin-top: 0px;
