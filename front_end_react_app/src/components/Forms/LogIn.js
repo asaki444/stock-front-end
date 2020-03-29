@@ -3,7 +3,7 @@ import "./FormStyles.css";
 import {handleChange} from '../../globalFunctions/globalFunctions';
 import {sessionRequest } from '../../globalFunctions/apiFunctions';
 import {Redirect} from 'react-router-dom';
-
+import Error from '../Error/Error';
 
 class Login extends React.Component {
   constructor(props){
@@ -11,6 +11,7 @@ class Login extends React.Component {
     this.state = {
         email: '',
         password: '',
+        logInSuccess: false
     }
 }
 
@@ -25,8 +26,15 @@ sessionRequest('login', {user: {
   email: email,
   password: password
 } }).then( (res) => {
+  console.log(res)
+   if(res.data.status === 401) {
+     this.setState(
+       {logInSuccess: true}
+     )
+     return 
+   }
    const {transactions,stocks, user, account_balance} = res.data;
-   console.log(res.data)
+   
    this.props.userState.dispatch({type: 'LOGIN', 
    user_id: user, 
    account_balance: account_balance, 
@@ -57,6 +65,7 @@ handleSubmit = (e)=>{
          <label for="email"> Password:</label>
          <input type="password" id="password" placeholder="Password" onChange={handleChange.bind(this)}/>
          <button id="register-button" onClick={this.handleSubmit}> Sign In</button>
+         {this.state.logInSuccess && <Error message={"Log in error"}/>}
       </form>
 
       )

@@ -1,0 +1,17 @@
+.search-list-item{
+    list-style-type: none;
+    border: solid 1px grey; 
+    padding: 5px 0 5px 5px;
+    width: 100%;
+}
+
+.search-list-item:hover {
+    background-color: grey;
+    color: white;
+}
+
+.search-list-container{
+    margin-left: 0;
+    padding-left: 0px;
+    margin-top: 0px;
+}
