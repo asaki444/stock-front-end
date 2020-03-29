@@ -4,7 +4,6 @@
     right:0;
 }
 
-.navigation-bar p{
-    color: #34a8eb;
-    text-decoration: underline;
+.navigation-bar > a{
+     margin: 5px;
 }

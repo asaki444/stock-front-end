@@ -1,9 +1,9 @@
 import React from 'react';
 import './FormStyles.css';
 import SearchAutoComplete from '../SearchAutoComplete/SearchAutoComplete';
-import { handleChange } from '../../globalFunctions/globalFunctions';
+import Error from '../Error/Error';
+import { handleChange, formatMoney } from '../../globalFunctions/globalFunctions';
 import { apiAlphaRequest, transactionRequest } from '../../globalFunctions/apiFunctions';
-import { Redirect } from 'react-router-dom';
 
 class PurchaseForm extends React.Component {
 	constructor (props) {
@@ -45,7 +45,7 @@ class PurchaseForm extends React.Component {
     let intQty = parseInt(Qty);
    
     apiAlphaRequest('stock_info', ticker).then( (res)=> {
-      console.log(res.data)
+      console.log("purchase form alpha api req", res.data)
      if(res.data.Note) return;
       let newTotal = intQty * parseInt(res.data['Global Quote']['05. price']);
 
@@ -56,14 +56,18 @@ class PurchaseForm extends React.Component {
 				stock_symbol    : ticker
 			}
 		}).then((res) => {
-
-			const { stock_symbol, balance, transaction } = res.data;
-
+			if(res.data.status === 405) {
+				this.setState(
+				  {errorMessage: res.data.message}
+				)
+				return 
+			  }
+			const { stocks, balance, transactions } = res.data;
 			this.props.userState.dispatch({
 				type            : 'PURCHASE_STOCK',
 				account_balance : balance,
-				stock           : stock_symbol,
-				transaction     : transaction
+				stocks          : stocks,
+				transactions     : transactions
 			});
     });
      }
@@ -78,16 +82,14 @@ class PurchaseForm extends React.Component {
 	};
 
 	render () {
-		const { account_balance, loggedIn } = this.props.userState.userState;
-		if (!loggedIn) {
-			return <Redirect to="/" />;
-		}
+	  const { account_balance } = this.props.userState.userState.user;
+
 		return (
 			<div className="purchase-form-div" onSubmit={this.handleSubmit}>
-				<h2>Cash: {account_balance} </h2>
+				<h2>Cash: {formatMoney(account_balance)} </h2>
 				<form className="log-in-form">
 					<label for="ticker">
-						{' '}
+
 						Ticker:
 						<input
 							type="text"
@@ -102,7 +104,6 @@ class PurchaseForm extends React.Component {
 						/>
 					</label>
 					<label for="number">
-						{' '}
 						Qty:
 						<input
 							type="number"
@@ -112,9 +113,10 @@ class PurchaseForm extends React.Component {
 							value={this.state.Qty}
 						/>
 					</label>
-           <input type="submit" id="register-button" value="Submit">
+           				<input type="submit" id="register-button" value="Submit">
 					</input>
 				</form>
+				<Error message={this.state.errorMessage} />
 			</div>
 		);
 	}

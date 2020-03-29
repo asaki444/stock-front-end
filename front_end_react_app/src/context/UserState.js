@@ -4,7 +4,7 @@ import {UserReducer} from './reducers'
 
 const initialState = {
   loggedIn: false,
-  user_id: null,
+  user: null,
   stocks: [],
   transactions: [],
   account_balance: 5000

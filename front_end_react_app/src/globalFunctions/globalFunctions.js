@@ -1,5 +1,5 @@
 export function handleChange (e) {
-        let value = e.target.value.trim()
+        let value = e.target.value
         this.setState({
             [e.target.id]: value
         })
@@ -23,3 +23,6 @@ export function handleChange (e) {
    return true;
 }
 
+export function formatMoney(number) {
+    return number.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+}

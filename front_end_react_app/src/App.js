@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
       <div className="App">
          <UserContext.Consumer>
-               {(userState) =>  <NavBar loggedIn={userState.userState.loggedIn}/>}
+               {(userState) =>  <NavBar userState={userState}/>}
           </UserContext.Consumer>
         <Switch>
             <Route path={"/portfolio"} component={Portfolio}/>

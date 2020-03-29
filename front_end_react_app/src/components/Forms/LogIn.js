@@ -26,7 +26,7 @@ sessionRequest('login', {user: {
   email: email,
   password: password
 } }).then( (res) => {
-  console.log(res)
+
    if(res.data.status === 401) {
      this.setState(
        {logInSuccess: true}

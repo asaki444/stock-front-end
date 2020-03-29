@@ -9,7 +9,9 @@ function Transactions () {
         <div className="transactions-div">
             <UserContext.Consumer>
               {(userState) => 
-              <StocksTemplate heading={"Transactions"} list={userState.userState.transactions}/>}
+              <StocksTemplate heading={"Transactions"} 
+              list={userState.userState.transactions} 
+              loggedIn={userState.userState.loggedIn}/>}
             </UserContext.Consumer>
         </div>
       

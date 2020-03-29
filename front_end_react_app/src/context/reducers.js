@@ -3,21 +3,26 @@ export const UserReducer = (state, action) => {
 		case 'LOGIN':
 			return {
 				...state,
-				user_id         : action.user_id,
+				user	        : action.user_id,
 				loggedIn        : true,
 				account_balance : action.balance,
 				transactions    : action.transactions,
 				stocks          : action.stocks
 			};
 		case 'LOGOUT':
+			console.log("this reached")
 			return {
 				...state,
-				loggedIn : false
+				loggedIn: false,
+				user: null,
+				stocks: [],
+				transactions: [],
+				account_balance: 5000
 			};
 		case 'REGISTER':
 			return {
 				...state,
-				user_id         : action.user_id,
+				user	        : action.user_id,
 				loggedIn        : true,
 				account_balance : action.account_balance
 			};
@@ -25,14 +30,8 @@ export const UserReducer = (state, action) => {
 			return {
 				...state,
 				account_balance : action.account_balance,
-				transactions    : [
-					...state.transactions,
-					action.transaction
-				],
-				stocks          : [
-					...state.stocks,
-					action.stock
-				]
+				transactions    : action.transactions,
+				stocks          : action.stocks
 			};
 		default:
 			return state;
