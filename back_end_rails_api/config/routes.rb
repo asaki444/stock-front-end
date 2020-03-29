@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/', to: 'static#index'
   resources :sessions,  only: [:create]
   resources :registrations, only: [:create]
   resources :transactions, only: [:create, :index]
