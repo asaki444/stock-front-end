@@ -19,7 +19,7 @@ export function sessionRequest(typeOfLogin, objToPost){
    let url;
    
    if(typeOfLogin === 'registration'){
-       url = 'registrations'
+       url = `${backend_url}/registrations`
    }
    else if(typeOfLogin === 'login'){
       url =   `${backend_url}/sessions`
