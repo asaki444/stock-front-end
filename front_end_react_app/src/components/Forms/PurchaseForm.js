@@ -46,8 +46,8 @@ class PurchaseForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     const { Qty, ticker } = this.state
-    let intQty = parseInt(Qty)
-    if (inQty < 0 || ticker == '') {
+    let intQty = parseInt(Qty);
+    if (intQty < 0 || ticker == '') {
       this.setState({
         errorMessage: 'Invalid Inputs'
       })
