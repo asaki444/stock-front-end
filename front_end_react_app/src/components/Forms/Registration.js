@@ -30,10 +30,10 @@ class Registration extends React.Component {
 			})
 				.then((response) => {
 					if (response.data.status === 'created') {
-						const { id, account_balance } = response.data.user;
+						const { account_balance }, user = response.data.user;
 						this.props.userState.dispatch({
 							type            : 'REGISTER',
-							user_id         : id,
+							user            : user,
 							account_balance : account_balance
 						});
 					}
