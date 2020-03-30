@@ -86,7 +86,7 @@ class PurchaseForm extends React.Component {
 
 		return (
 			<div className="purchase-form-div" onSubmit={this.handleSubmit}>
-				<h2>Cash: {formatMoney(account_balance)} </h2>
+				<h2>Cash: {account_balance && formatMoney(account_balance)} </h2>
 				<form className="log-in-form">
 					<label for="ticker">
 
