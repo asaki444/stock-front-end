@@ -5,19 +5,9 @@ export const UserReducer = (state, action) => {
 				...state,
 				user	        : action.user_id,
 				loggedIn        : true,
-				account_balance : action.balance,
+				account_balance : action.account_balance,
 				transactions    : action.transactions,
 				stocks          : action.stocks
-			};
-		case 'LOGOUT':
-			console.log("this reached")
-			return {
-				...state,
-				loggedIn: false,
-				user: null,
-				stocks: [],
-				transactions: [],
-				account_balance: 5000
 			};
 		case 'REGISTER':
 			return {

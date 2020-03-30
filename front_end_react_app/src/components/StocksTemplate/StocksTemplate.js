@@ -10,7 +10,7 @@ class StockTemplate extends React.Component {
        super(props)
        this.state = {
            stockDataRes: [],
-           currentPortVal: 0
+           currentPortVal: 0,
        }
    }
    
@@ -39,8 +39,6 @@ class StockTemplate extends React.Component {
             )
          }
        )
-
-     
    }
 
     indicateValChange(change){
@@ -59,15 +57,13 @@ class StockTemplate extends React.Component {
    render(){
        const {
            heading,
-           list,
-           userState
+           list
        } = this.props
        const{
            stockDataRes,
            currentPortVal
        } = this.state
-        
-       console.log("loggedIn", this.props)
+
        if (!this.props.loggedIn) {
         return <Redirect to="/" />;
         }
@@ -75,8 +71,8 @@ class StockTemplate extends React.Component {
      return(
          <div>
              <h2 className="stock-list-heading">{heading}</h2>
-              <p>Moneys: {formatMoney(currentPortVal)}</p>
-            <table>
+              {heading === "Portfolio" && <p>Moneys: {formatMoney(currentPortVal)}</p>}
+            <table className="stocks-container">
                 <tbody>
                    {
                    list && list.map( (stock, i ) =>
@@ -97,6 +93,7 @@ class StockTemplate extends React.Component {
                    }
                 </tbody>
             </table>
+            {stockDataRes.length !== list.length && <p> Loading Today's Prices</p>}
          </div>
        
       )

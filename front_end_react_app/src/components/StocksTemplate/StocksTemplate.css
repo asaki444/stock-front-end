@@ -20,3 +20,9 @@
 .price-decrease{
     color: red;
 }
+
+.stocks-container{
+    border: solid 1px grey;
+    width: 400px;
+    margin-right: 40px;
+}
