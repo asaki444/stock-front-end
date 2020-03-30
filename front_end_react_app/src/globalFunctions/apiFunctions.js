@@ -17,7 +17,7 @@ export function apiAlphaRequest(urlPurpose,val){
 
 export function sessionRequest(typeOfLogin, objToPost){
    let url;
-   
+    
    if(typeOfLogin === 'registration'){
        url = `${backend_url}/registrations`
    }
