@@ -4,8 +4,16 @@
     font-size: 20px;
 }
 
-.stock-list-heading{
+.stock-list-heading, .stocks-container, .portfolio-value {
     padding-left: 10px;
+}
+
+.stock-list-heading{
+    margin-top: 50px;
+}
+
+.stocks-container{
+    margin: 20px
 }
 
 .table-row td:nth-child(3){
@@ -19,10 +27,4 @@
 
 .price-decrease{
     color: red;
-}
-
-.stocks-container{
-    border: solid 1px grey;
-    width: 400px;
-    margin-right: 40px;
 }

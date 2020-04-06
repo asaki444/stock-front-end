@@ -47,7 +47,7 @@ class PurchaseForm extends React.Component {
     e.preventDefault()
     const { Qty, ticker } = this.state
     let intQty = parseInt(Qty);
-    if (intQty < 0 || ticker == '') {
+    if (intQty < 0 || ticker === '') {
       this.setState({
         errorMessage: 'Invalid Inputs'
       })
@@ -88,8 +88,7 @@ class PurchaseForm extends React.Component {
   }
 
   render () {
-    const { account_balance } = this.props.userState.userState.user
-
+    const { account_balance } = this.props.userState.userState;
     return (
       <div className='purchase-form-div' onSubmit={this.handleSubmit}>
         <h2>Cash: {account_balance && formatMoney(account_balance)} </h2>

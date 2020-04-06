@@ -19,7 +19,7 @@ class StockTemplate extends React.Component {
           this.getPrices()
       }
    }
-    
+
 
    getPrices()  {
        const {list} = this.props;
@@ -71,7 +71,7 @@ class StockTemplate extends React.Component {
      return(
          <div>
              <h2 className="stock-list-heading">{heading}</h2>
-              {heading === "Portfolio" && <p>Moneys: {formatMoney(currentPortVal)}</p>}
+              {heading === "Portfolio" && <h4 className="portfolio-value">Portfolio Value: {formatMoney(currentPortVal)}</h4>}
             <table className="stocks-container">
                 <tbody>
                    {
@@ -85,7 +85,7 @@ class StockTemplate extends React.Component {
                                           {stockDataRes[i].price && formatMoney(stockDataRes[i].price)} 
                                          </td> :
                                          <td>
-                                             {stock.purchase_amount}
+                                             {stock.purchase_amount && formatMoney(stock.purchase_amount)}
                                          </td>
                                   }
                                  
@@ -93,7 +93,6 @@ class StockTemplate extends React.Component {
                    }
                 </tbody>
             </table>
-            {stockDataRes.length !== list.length && <p> Loading Today's Prices</p>}
          </div>
        
       )

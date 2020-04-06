@@ -29,15 +29,17 @@ class Registration extends React.Component {
 				}
 			})
 				.then((response) => {
+					console.log(response)
 					if (response.data.status === 'created') {
-						const { account_balance }, user = response.data.user;
+						const { account_balance } = response.data.user;
+						const user = response.data.user
 						this.props.userState.dispatch({
 							type            : 'REGISTER',
 							user            : user,
 							account_balance : account_balance
 						});
 					}
-					else if (response.data.status === 'duplicate record') {
+					else if (response.data.message === 'duplicate record') {
 						this.setState({
 							duplicateFound : true
 						});

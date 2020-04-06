@@ -12,7 +12,7 @@ export const UserReducer = (state, action) => {
 		case 'REGISTER':
 			return {
 				...state,
-				user	        : action.user_id,
+				user	        : action.user,
 				loggedIn        : true,
 				account_balance : action.account_balance
 			};
